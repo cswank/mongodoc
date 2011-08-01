@@ -13,34 +13,36 @@ class MongoDoc(object):
         self._lines = []
         self.get_lines(doc)
         self.get_subdocs(doc)
-        
+
+    @property
+    def text(self):
+        return '\n'.join([line for line in self.lines])
 
     @property
     def lines(self):
         for line in self.header:
             yield line.format('', width=self.width)
+        sub_lines = None
         for line in self._lines:
             if len(self._subdocs) > 0:
+                sub_lines = self._subdocs.pop().lines
+            if sub_lines is not None:
+                try:
+                    sub_line = sub_lines.next()
+                except StopIteration:
+                    
                 line = '| {0}: {1: >{width}} {2} |'.format(line[0], line[1], self._subdocs[0].lines.next(), width=self._width)
             else:
                 line = '| {0}: {1: >{width}} |'.format(line[0], line[1], width=self.width)
             yield line
         yield self.footer.format('', width=self.width)
-        
+
     @property
     def width(self):
         if len(self._subdocs) > 0:
             return self._width + max([d.width for d in self._subdocs])
         return self._width
 
-    @property
-    def pdf(self):
-        pass
-    
-    @property
-    def text(self):
-        return '\n'.join([line for line in self.lines])
-        
     @property
     def header(self):
         return [
