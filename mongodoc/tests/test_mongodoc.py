@@ -12,11 +12,10 @@ class TestMongoDoc(object):
 
     def test_text(self):
         #eq_(self.md.text, '')
+        eq_(len(self.md._subdocs), 1)
         print 'result:'
         print self.md.text
 
-    def test_get_boxes(self):
-        self.md.get_boxes(doc)
 
     
             
