@@ -15,6 +15,13 @@ class MongoDoc(object):
         self._lines = []
 
     @property
+    def lines(self):
+        for line in self.header:
+            yield line
+        for line in self._lines:
+            pass
+
+    @property
     def width(self):
         return self._width + max([d.width for d in self._subdocs])
 
@@ -33,7 +40,11 @@ class MongoDoc(object):
 
     @property
     def header(self):
-        return '{0:_>{width}} \n| {name: >{width}}|\n|{_:>{width}|\n'
+        return [
+            '{0:_>{width}} \n',
+            '| {name: >{width}}|\n',
+            '|{_:>{width}|\n',
+            ]
 
     def get_subdocs(self, doc):
         for key, value in doc.iteritems():
