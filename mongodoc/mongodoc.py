@@ -33,10 +33,7 @@ class MongoDoc(object):
 
     @property
     def header(self):
-        text = ' ' + '_' * (self._width + 1) + ' \n'
-        text += '| {0}'.format(self._name) + ' ' * (self._width - len(self._name))  + '|\n'
-        text += '|' + '_' * (self._width + 1) + '|\n'
-        return text
+        return '{0:_>{width}} \n| {name: >{width}}|\n|{_:>{width}|\n'
 
     def get_subdocs(self, doc):
         for key, value in doc.iteritems():
