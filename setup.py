@@ -19,6 +19,7 @@ setup(name='mongodoc',
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
+          'reportlab',
       ],
       entry_points="""
       # -*- Entry points: -*-
