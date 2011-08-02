@@ -71,7 +71,7 @@ class MongoDoc(object):
         width = self._width - len(kv) - 1
         if width < 0:
             width = 0
-        return '| {0}{1: <{width}}|'.format(
+        return '| {0}{1: <{width}}    |'.format(
             kv,
             ' ',
             width=width,
