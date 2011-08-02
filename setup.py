@@ -9,7 +9,7 @@ setup(name='mongodoc',
       long_description="""\
 """,
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-      keywords='',
+      keywords='mongodb database documentation',
       author='Craig Swank',
       author_email='craigswank@gmail.com',
       url='',
