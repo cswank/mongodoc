@@ -2,7 +2,7 @@
 
 class MongoDoc(object):
 
-    def __init__(self, doc, name, x=0, y=0):
+    def __init__(self, doc, name, x=0, y=0, inlist=False):
         self._doc = doc
         self._x = x
         self._y = y
@@ -12,10 +12,10 @@ class MongoDoc(object):
         self._subdocs = []
         self._subdoc_rows = None
         self._rows = []
+        self._inlist = inlist
         self.get_rows(doc)
         self.get_subdocs(doc)
         self._width = self._get_width()
-
 
     def _get_width(self):
         subdoc_width = max([d._width for d in self._subdocs]) if len(self._subdocs) > 0 else 0
