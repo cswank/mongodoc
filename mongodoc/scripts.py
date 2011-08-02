@@ -54,9 +54,9 @@ def write_output(text, args):
 
 def document_db():
     args = get_args()
-    db = get_db(args.host, args.port, args.name)
+    db = get_db(args.host, args.port, args.name, username=args.username, passoword=args.password)
     text = ''
-    for name in db.collection_names():
+    for name in sorted(db.collection_names()):
         if name.startswith('system.'):
             continue
         text += document_collection(db, name) + '\n\n'
