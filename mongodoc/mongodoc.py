@@ -38,6 +38,10 @@ class MongoDoc(object):
             else:
                 row = self._get_row_without_subdoc(row)
             yield row
+        subdoc_row = self._get_subdoc_row()
+        while subdoc_row is not None:
+            yield self._get_row_with_subdoc(['',''], subdoc_row)
+            subdoc_row = self._get_subdoc_row()
         yield self.footer.format('', width=self._width)
 
     def _get_row_with_subdoc(self, row, subdoc_row):
@@ -48,7 +52,12 @@ class MongoDoc(object):
                           w1 = self._width - len key/value  |
                                                        w2 = self.width - len(subdoc_row)
         """
-        kv = '{0}: {1}'.format(row[0], row[1])
+        if row[0] == '':
+            kv = ''
+        else:
+            width = self._max_row_width - len(row[0]) - 10
+            kv = '{0}: {1: >{width}}'.format(row[0], row[1], width=width)
+            #kv = '{0}: {1}'.format(row[0], row[1])
         width = self._width - len(kv) - 2
         return '| {0} {1: >{width}}|'.format(
             kv,
@@ -57,11 +66,15 @@ class MongoDoc(object):
             )
 
     def _get_row_without_subdoc(self, row):
-        kv = '{0}: {1}'.format(row[0], row[1])
+        width = self._max_row_width - len(row[0]) - 10
+        kv = '{0}: {1: >{width}}'.format(row[0], row[1], width=width)
+        width = self._width - len(kv) - 1
+        if width < 0:
+            width = 0
         return '| {0}{1: <{width}}|'.format(
             kv,
             ' ',
-            width=self._width - len(kv) - 1
+            width=width,
             )
 
     @property
@@ -85,7 +98,7 @@ class MongoDoc(object):
         for key, value in doc.iteritems():
             #row = '| {0}: {1: >{width}}'.format(key, str(type(value)), width=60 - len(key))
             row = (key, str(type(value)))
-            l = len(row[0]) + len(row[1]) + 5
+            l = len(row[0]) + len(row[1]) + 10
             if l > self._max_row_width:
                 self._max_row_width = l
             self._height += 1

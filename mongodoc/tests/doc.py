@@ -29,9 +29,11 @@ doc = {
     u'hydrolysis_temperature': u'40',
     u'results': {
         'junk':{
-            'f1':'hi',
-            'f2':'craig',
-            }
+            'first':'craig',
+            'last':'craig',
+            'address': '333 Nucla',
+            'mood': 'grumpy',
+            },
         u'data': [
             {
                 u'xylose_std': u'0.00',
