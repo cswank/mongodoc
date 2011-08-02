@@ -5,11 +5,11 @@ from pymongo import Connection
 
 def get_args():
     parser = argparse.ArgumentParser(description='Document a mongo db')
+    parser.add_argument('name', type=str, help='The name of the mongo db to document')
     parser.add_argument('--port', default=27017, type=int, help='The db port number')
     parser.add_argument('--host', type=str, default='localhost', help='The db host')
     parser.add_argument('--username', type=str, help='The username for authenticating to the db')
     parser.add_argument('--password', type=str, help='The password for authenticating to the db')
-    parser.add_argument('--name', required=True, type=str, help='The name of the mongo db to document')
     parser.add_argument('--file', type=str, help='The name of the output file')
     return parser.parse_args()
 

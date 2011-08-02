@@ -8,7 +8,7 @@ def read(fname):
 
 setup(name='mongodoc',
       version=version,
-      description=read('README.txt'),
+      description="Creates a uml-like diagram for a nested mongodb document",
       long_description=read('README.txt'),
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       keywords='mongodb database documentation',
