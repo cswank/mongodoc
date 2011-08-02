@@ -13,13 +13,14 @@ setup(name='mongodoc',
       author='Craig Swank',
       author_email='craigswank@gmail.com',
       url='',
-      license='',
+      license='MIT License',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
           'pymongo',
+          'argparse',
       ],
       entry_points="""
       # -*- Entry points: -*-
