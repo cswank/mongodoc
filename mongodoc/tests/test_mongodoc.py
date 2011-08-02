@@ -14,7 +14,7 @@ class TestMongoDoc(object):
         #eq_(self.md.text, '')
         eq_(len(self.md._subdocs), 1)
         print 'result:'
-        print self.md.text
+        eq_(self.md.text, '')
 
 
     
