@@ -2,17 +2,21 @@
 
 class MongoDoc(object):
 
+    _ROW_BUFFER = 10
+
     def __init__(self, doc, name, x=0, y=0, inlist=False):
         self._doc = doc
         self._x = x
         self._y = y
-        self._name = name
+        if inlist:
+            self._name = '{0} <list>'.format(name)
+        else:
+            self._name = name
         self._max_row_width = 0
         self._height = 0
         self._subdocs = []
         self._subdoc_rows = None
         self._rows = []
-        self._inlist = inlist
         self.get_rows(doc)
         self.get_subdocs(doc)
         self._width = self._get_width()
@@ -55,9 +59,8 @@ class MongoDoc(object):
         if row[0] == '':
             kv = ''
         else:
-            width = self._max_row_width - len(row[0]) - 10
+            width = self._max_row_width - len(row[0]) - self._ROW_BUFFER
             kv = '{0}: {1: >{width}}'.format(row[0], row[1], width=width)
-            #kv = '{0}: {1}'.format(row[0], row[1])
         width = self._width - len(kv) - 2
         return '| {0} {1: >{width}}|'.format(
             kv,
@@ -66,12 +69,12 @@ class MongoDoc(object):
             )
 
     def _get_row_without_subdoc(self, row):
-        width = self._max_row_width - len(row[0]) - 10
+        width = self._max_row_width - len(row[0]) - self._ROW_BUFFER
         kv = '{0}: {1: >{width}}'.format(row[0], row[1], width=width)
         width = self._width - len(kv) - 1
         if width < 0:
             width = 0
-        return '| {0}{1: <{width}}    |'.format(
+        return '| {0}{1: <{width}}|'.format(
             kv,
             ' ',
             width=width,
@@ -93,12 +96,14 @@ class MongoDoc(object):
         for key, value in doc.iteritems():
             if isinstance(value, dict):
                 self._subdocs.append(MongoDoc(value, key))
+            elif isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
+                self._subdocs.append(MongoDoc(value[0], key, inlist=True))
+            
 
     def get_rows(self, doc):
         for key, value in doc.iteritems():
-            #row = '| {0}: {1: >{width}}'.format(key, str(type(value)), width=60 - len(key))
             row = (key, str(type(value)))
-            l = len(row[0]) + len(row[1]) + 10
+            l = len(row[0]) + len(row[1]) + self._ROW_BUFFER
             if l > self._max_row_width:
                 self._max_row_width = l
             self._height += 1
@@ -113,12 +118,6 @@ class MongoDoc(object):
         try:
             row = self._subdoc_rows.next()
         except StopIteration:
+            self._subdoc_rows = None
             return
         return row
-            
-                
-
-    
-
-    
-
