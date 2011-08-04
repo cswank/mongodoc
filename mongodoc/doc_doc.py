@@ -1,4 +1,4 @@
-class MongoDoc(object):
+class DocDoc(object):
     """
     Takes a dictionary and documents the type for each key.
     If the value for a key is a dict (or a list of dicts)
@@ -28,6 +28,10 @@ class MongoDoc(object):
         self.get_rows(doc)
         self.get_subdocs(doc)
         self._width = self._get_width()
+
+    @property
+    def doc(self):
+        return self._doc
 
     @property
     def text(self):
@@ -86,9 +90,9 @@ class MongoDoc(object):
     def get_subdocs(self, doc):
         for key, value in doc.iteritems():
             if isinstance(value, dict):
-                self._subdocs.append(MongoDoc(value, key))
+                self._subdocs.append(DocDoc(value, key))
             elif isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
-                self._subdocs.append(MongoDoc(value[0], key, inlist=True))
+                self._subdocs.append(DocDoc(value[0], key, inlist=True))
             
     def get_rows(self, doc):
         for key, value in doc.iteritems():

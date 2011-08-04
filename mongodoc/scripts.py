@@ -1,6 +1,6 @@
 import argparse
 import os
-from .mongodoc import MongoDoc
+from .doc_doc import DocDoc
 from pymongo import Connection
 
 def get_args():
@@ -30,13 +30,13 @@ def document_collection(db, name):
         except StopIteration:
             print 'sorry, that was the last doc in this collection and it will be used for the output.'
             break
-        mongo_doc = MongoDoc(doc, name)
+        mongo_doc = DocDoc(doc, name)
         text = mongo_doc.text
         print text
         answer = raw_input('Use this doc (y/n)?')
         if answer != 'n':
             break
-    return text
+    return mongo_doc
 
 def write_output(text, args):
     filename = args.file
@@ -56,11 +56,13 @@ def document_db():
     args = get_args()
     db = get_db(args.host, args.port, args.name)
     text = ''
+    docs = []
     for name in db.collection_names():
         if name.startswith('system.'):
             continue
-        text += document_collection(db, name) + '\n\n'
-    write_output(text, args)
+        docs.append(document_collection(db, name))
+    collection_doc = CollectionDoc(db, docs)
+    write_output(collection_doc.text, args)
     
         
     
