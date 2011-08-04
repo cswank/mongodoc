@@ -33,29 +33,21 @@ class CollectionDoc(object):
         return level
             
     def _make_link(self, doc_collection_name, collection_name, key, value, text, level):
-        
-        
-        
         for collection_start, row in enumerate(text):
             j = row.find('{0} '.format(doc_collection_name))
             if -1 < j < 20:
                 break
-
         for i, row in enumerate(text[collection_start:]):
             j = row.find('{0}:'.format(key))
             if -1 < j < 20:
                 break
-
         for k, row in enumerate(text):
             j = row.find('{0} '.format(collection_name))
             if -1 < j < 20:
                 break
-        
         start, end = sorted([k, i + collection_start])
         for i in xrange(len(text) - 1):
             self._append_row(start, end, i, text, level)
-
-        
 
     def _append_row(self, start, end, i, text, level):
         j = 3 * level
