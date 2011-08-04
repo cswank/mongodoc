@@ -25,13 +25,19 @@ class MongoDoc(object):
         self._subdocs = []
         self._subdoc_rows = None
         self._rows = []
+        self._text = None
         self.get_rows(doc)
         self.get_subdocs(doc)
         self._width = self._get_width()
 
+    def __eq__(self, other):
+        return self.text == other.text
+
     @property
     def text(self):
-        return '\n'.join([row for row in self.rows])
+        if self._text is None:
+            self._text = '\n'.join([row for row in self.rows])
+        return self._text
 
     @property
     def rows(self):
