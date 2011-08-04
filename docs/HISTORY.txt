@@ -1,0 +1,15 @@
+Changelog
+=========
+
+0.2a
+-------------------
+- Added a simple method to help find the most 
+  representative doc in each collection
+- Added a class that finds links between
+  collections and draws lines between them
+
+
+0.1
+-------------------
+
+- Initial release

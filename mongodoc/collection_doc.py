@@ -22,29 +22,40 @@ class CollectionDoc(object):
         level = 0
         for doc in self._docs:
             fields = self._find_link_fields(doc.doc)
-            level = self._make_links(fields, text, level)
+            level = self._make_links(doc.collection, fields, text, level)
             
-    def _make_links(self, fields, text, level):
+    def _make_links(self, doc_collection_name, fields, text, level):
         for key, value in fields.iteritems():
             collection_name = self._find_collection(key, value)
             if collection_name is not None:
-                self._make_link(collection_name, key, value, text, level)
+                self._make_link(doc_collection_name, collection_name, key, value, text, level)
                 level += 1
         return level
             
-    def _make_link(self, collection_name, key, value, text, level):
-        for i, row in enumerate(text):
-            j = row.find(key)
+    def _make_link(self, doc_collection_name, collection_name, key, value, text, level):
+        
+        
+        
+        for collection_start, row in enumerate(text):
+            j = row.find('{0} '.format(doc_collection_name))
             if -1 < j < 20:
                 break
+
+        for i, row in enumerate(text[collection_start:]):
+            j = row.find('{0}:'.format(key))
+            if -1 < j < 20:
+                break
+
         for k, row in enumerate(text):
             j = row.find('{0} '.format(collection_name))
             if -1 < j < 20:
                 break
-        start, end = sorted([i, k])
+        
+        start, end = sorted([k, i + collection_start])
         for i in xrange(len(text) - 1):
             self._append_row(start, end, i, text, level)
 
+        
 
     def _append_row(self, start, end, i, text, level):
         j = 3 * level
@@ -60,7 +71,6 @@ class CollectionDoc(object):
         elif start < i or i < end:
             prefix = '|  {0}'.format(prefix)
         text[i] = prefix + rest
-        
 
     def _find_collection(self, key, value):
         scores = []

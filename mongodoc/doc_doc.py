@@ -34,6 +34,10 @@ class DocDoc(object):
         return self.text == other.text
 
     @property
+    def collection(self):
+        return self._name
+
+    @property
     def doc(self):
         return self._doc
 
