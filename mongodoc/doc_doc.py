@@ -25,9 +25,13 @@ class DocDoc(object):
         self._subdocs = []
         self._subdoc_rows = None
         self._rows = []
+        self._text = None
         self.get_rows(doc)
         self.get_subdocs(doc)
         self._width = self._get_width()
+
+    def __eq__(self, other):
+        return self.text == other.text
 
     @property
     def doc(self):
@@ -35,7 +39,9 @@ class DocDoc(object):
 
     @property
     def text(self):
-        return '\n'.join([row for row in self.rows])
+        if self._text is None:
+            self._text = '\n'.join([row for row in self.rows])
+        return self._text
 
     @property
     def rows(self):
@@ -95,12 +101,15 @@ class DocDoc(object):
                 self._subdocs.append(DocDoc(value[0], key, inlist=True))
             
     def get_rows(self, doc):
+        rows = []
         for key, value in doc.iteritems():
             row = (key, str(type(value)))
             l = len(row[0]) + len(row[1]) + self._ROW_BUFFER
             if l > self._max_row_width:
                 self._max_row_width = l
-            self._rows.append(row)
+            rows.append((row, key))
+        rows.sort(key=lambda x: x[1])
+        self._rows = [item[0] for item in rows]
 
     def _get_subdoc_row(self):
         if self._subdoc_rows is None and len(self._subdocs) == 0:
