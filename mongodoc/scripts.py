@@ -24,22 +24,24 @@ def get_db(host, port, name, username=None, password=None):
     return db
 
 def count_docs(cursor, name):
-    counter = defaultdict(int)
+    counter = dict()
     for i, doc in enumerate(cursor):
         mongo_doc = DocDoc(doc, name)
-        counter[mongo_doc] += 1
+        if mongo_doc.text not in counter:
+            counter[mongo_doc.text] = dict(doc=mongo_doc, count=1)
+        else:
+            counter[mongo_doc.text]['count'] += 1
     return counter, i
 
 def find_representative_doc(db, name, skip):
     cursor = db[name].find().limit(20).skip(skip)
-    counter, i = count_docs(cursor, name)
-    if len(counter.items()) == 0:
+    if cursor.count(with_limit_and_skip=True) == 0:
         print 'WARNING: all the documents have been examined, reverting to the first set'
         cursor = db[name].find().limit(20)
-        counter, i = count_docs(cursor, name)
-    items = counter.items()
-    m = max(items, key=lambda x: x[1])
-    return m[0], '{0:.02f}%'.format((100.0 * m[1] / (i + 1))), i + 1
+    counter, i = count_docs(cursor, name)
+    values = counter.values()
+    m = max(values, key=lambda x: x['count'])
+    return m['doc'], '{0:.02f}%'.format((100.0 * m['count'] / (i + 1))), i + 1
 
 def document_collection(db, name):
     skip = 0

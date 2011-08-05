@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.2b
+-------------------
+- Fixed a bug in counting similar docs
+- When the user keeps saying no to the
+  'use this doc' prompt
+
 0.2a
 -------------------
 - Added a simple method to help find the most 
