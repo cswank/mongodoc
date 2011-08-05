@@ -4,10 +4,11 @@ from pymongo.objectid import ObjectId
 
 class CollectionDoc(object):
 
-    def __init__(self, db, docs):
+    def __init__(self, db, docs, find_links=True):
         self._db = db
         self._collection_names = db.collection_names()
         self._docs = docs
+        self._find_links = find_links
 
     @property
     def text(self):
@@ -15,7 +16,8 @@ class CollectionDoc(object):
         for doc in self._docs:
             text += '{0}\n\n'.format(doc.text)
         text = text.split('\n')
-        self._find_relationships(text)
+        if self._find_links:
+            self._find_relationships(text)
         return '\n'.join(text)
 
     def _find_relationships(self, text):
@@ -41,10 +43,15 @@ class CollectionDoc(object):
             j = row.find('{0}:'.format(key))
             if -1 < j < 20:
                 break
+        found = False
         for k, row in enumerate(text):
             j = row.find('{0} '.format(collection_name))
             if -1 < j < 20:
-                break
+                found=True
+            if found:
+                l = row.find('_id:')
+                if -1 < l < 20:
+                    break
         start, end = sorted([k, i + collection_start])
         for i in xrange(len(text) - 1):
             self._append_row(start, end, i, text, level)
@@ -53,7 +60,6 @@ class CollectionDoc(object):
         j = 3 * level
         prefix = text[i][:j]
         rest = text[i][j:]
-        print 'prefix:', len(prefix), level, prefix
         if (i == start or i == end) and '|' not in prefix:
             prefix = '+--{0}'.format(prefix.replace(' ', '-'))
         elif (i == start or i == end) and '|' in prefix:

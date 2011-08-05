@@ -6,25 +6,39 @@ command::
     % doc-db test
 
 After answering a few questions, you will get an output file that
-will look something like this::
+will look something like this (NOTE:  the links between docs has
+been added in v0.2b.  I don't have very much test data, but seems
+to work)::
 
-     _____________________________________________________________________________
-    | people                                                                      |
-    |_____________________________________________________________________________|
-    | last:                <type 'unicode'>       ________________________________|
-    | mood:                <type 'unicode'>     | address                        ||
-    | age:                     <type 'int'>     |________________________________||
-    | location:            <type 'unicode'>     | state:  <type 'unicode'>       ||
-    | address:                <type 'dict'>     | street: <type 'unicode'>       ||
-    | _id: <class 'bson.objectid.ObjectId'>     | number:     <type 'int'>       ||
-    | first:               <type 'unicode'>     | zip:        <type 'int'>       ||
-    |                                           |________________________________||
-    |_____________________________________________________________________________|
+        _____________________________________________
+       | occupations                                 |
+       |_____________________________________________|
+    +--| _id: <class 'bson.objectid.ObjectId'>       |
+    |  | duties:                 <type 'list'>       |
+    |  | title:               <type 'unicode'>       |
+    |  |_____________________________________________|
+    |  
+    |   ____________________________________________________________________________________
+    |  | people                                                                             |
+    |  |____________________________________________________________________________________|
+    |  | _id:        <class 'bson.objectid.ObjectId'>       ________________________________|
+    |  | address:                       <type 'dict'>     | address                        ||
+    |  | first:                      <type 'unicode'>     |________________________________||
+    |  | last:                       <type 'unicode'>     | number: <type 'unicode'>       ||
+    +--| occupation: <class 'bson.objectid.ObjectId'>     | state:  <type 'unicode'>       ||
+       |                                                  | street: <type 'unicode'>       ||
+       |                                                  | zip:    <type 'unicode'>       ||
+       |                                                  |________________________________||
+       |____________________________________________________________________________________|
+   
 
-
-This document has a sub-document for the value of the address
-field, so it appears as a box within the people diagram. You
-will get one of these diagrams for each collection in the db.
+The document in the people collection has a sub-document for
+the value of the address field, so it appears as a box within 
+the people diagram. You will get one of these diagrams for each
+collection in the db.  MongoDoc found that there is a probable
+link between the _id of occupations and the occupation field
+of the people doc.  If the find links feature is not working
+for you, you can disable it with the --find-links option
 
 The doc-db command has a few options for connecting to the db::
 
@@ -45,4 +59,5 @@ The doc-db command has a few options for connecting to the db::
       --username USERNAME  The username for authenticating to the db
       --password PASSWORD  The password for authenticating to the db
       --file FILE          The name of the output file
+      --find-links         Enter no if you don't want to find links.
 

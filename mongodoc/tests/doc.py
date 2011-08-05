@@ -1,5 +1,37 @@
 import datetime
+from pymongo import Connection
 from pymongo.objectid import ObjectId
+
+
+def make_test_db():
+    c = Connection()
+    db = c.mongodoc_test
+
+    person = dict(
+        last='Swank',
+        first='Craig',
+        address=dict(
+            state='CO',
+            street='Olathe',
+            number='1255',
+            zip='80203'
+            ),
+        occupation=ObjectId('4d5189f14ee31307d9000000'),
+        )
+
+    occupation = dict(
+        _id=ObjectId('4d5189f14ee31307d9000000'),
+        title='plumber',
+        duties=['plumb', 'route'],
+        )
+    
+    db.people.save(person)
+    db.occupations.save(occupation)
+
+if __name__ == '__main__':
+    make_test_db()
+
+    
 
 doc = {
     u'run_start_date': datetime.datetime(2010, 9, 17, 0, 0),

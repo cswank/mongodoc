@@ -3,13 +3,15 @@ import sys, os
 
 version = '0.2a'
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+def read():
+    readme = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+    history = open(os.path.join(os.path.dirname(__file__), 'docs', 'HISTORY.txt')).read()
+    return '{0}\n\n{1}'.format(readme, history)
 
 setup(name='mongodoc',
       version=version,
       description="Creates a uml-like diagram for a nested mongodb document",
-      long_description=read('README.rst'),
+      long_description=read(),
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       keywords='mongodb database documentation',
       author='Craig Swank',

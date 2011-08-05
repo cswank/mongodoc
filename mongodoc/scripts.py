@@ -13,6 +13,7 @@ def get_args():
     parser.add_argument('--username', type=str, help='The username for authenticating to the db')
     parser.add_argument('--password', type=str, help='The password for authenticating to the db')
     parser.add_argument('--file', type=str, help='The name of the output file')
+    parser.add_argument('--find-links', default='yes', type=str, help='Enter "no" if you don\'t want to find links')
     return parser.parse_args()
 
 def get_db(host, port, name, username=None, password=None):
@@ -76,7 +77,8 @@ def document_db():
         if name.startswith('system.'):
             continue
         docs.append(document_collection(db, name))
-    collection_doc = CollectionDoc(db, docs)
+    find_links = True if args.find_links == 'yes' else False
+    collection_doc = CollectionDoc(db, docs, find_links=find_links)
     write_output(collection_doc.text, args)
     
         
