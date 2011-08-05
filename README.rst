@@ -10,27 +10,35 @@ will look something like this (NOTE:  the links between docs has
 been added in v0.2b.  I don't have very much test data, but seems
 to work)::
 
-        _____________________________________________
-       | occupations                                 |
-       |_____________________________________________|
-    +--| _id: <class 'bson.objectid.ObjectId'>       |
-    |  | duties:                 <type 'list'>       |
-    |  | title:               <type 'unicode'>       |
-    |  |_____________________________________________|
-    |  
-    |   ____________________________________________________________________________________
-    |  | people                                                                             |
-    |  |____________________________________________________________________________________|
-    |  | _id:        <class 'bson.objectid.ObjectId'>       ________________________________|
-    |  | address:                       <type 'dict'>     | address                        ||
-    |  | first:                      <type 'unicode'>     |________________________________||
-    |  | last:                       <type 'unicode'>     | number: <type 'unicode'>       ||
-    +--| occupation: <class 'bson.objectid.ObjectId'>     | state:  <type 'unicode'>       ||
-       |                                                  | street: <type 'unicode'>       ||
-       |                                                  | zip:    <type 'unicode'>       ||
-       |                                                  |________________________________||
-       |____________________________________________________________________________________|
-   
+
+           _____________________________________________
+          | hobbies                                     |
+          |_____________________________________________|
+       +--| _id: <class 'bson.objectid.ObjectId'>       |
+       |  | title:               <type 'unicode'>       |
+       |  |_____________________________________________|
+       |  
+       |   _____________________________________________
+       |  | occupations                                 |
+       |  |_____________________________________________|
+    +--+--| _id: <class 'bson.objectid.ObjectId'>       |
+    |  |  | duties:                 <type 'list'>       |
+    |  |  | title:               <type 'unicode'>       |
+    |  |  |_____________________________________________|
+    |  |  
+    |  |   ____________________________________________________________________________________
+    |  |  | people                                                                             |
+    |  |  |____________________________________________________________________________________|
+    |  |  | _id:        <class 'bson.objectid.ObjectId'>       ________________________________|
+    |  |  | address:                       <type 'dict'>     | address                        ||
+    |  |  | first:                      <type 'unicode'>     |________________________________||
+    |  +--| hobby:      <class 'bson.objectid.ObjectId'>     | number: <type 'unicode'>       ||
+    |     | last:                       <type 'unicode'>     | state:  <type 'unicode'>       ||
+    +-----| occupation: <class 'bson.objectid.ObjectId'>     | street: <type 'unicode'>       ||
+          |                                                  | zip:    <type 'unicode'>       ||
+          |                                                  |________________________________||
+          |____________________________________________________________________________________|
+      
 
 The document in the people collection has a sub-document for
 the value of the address field, so it appears as a box within 

@@ -6,7 +6,8 @@ from pymongo.objectid import ObjectId
 def make_test_db():
     c = Connection()
     db = c.mongodoc_test
-
+    db.people.remove()
+    db.occupations.remove()
     person = dict(
         last='Swank',
         first='Craig',
@@ -17,6 +18,7 @@ def make_test_db():
             zip='80203'
             ),
         occupation=ObjectId('4d5189f14ee31307d9000000'),
+        hobby=ObjectId('4c9930234ee3132a1f000001'),
         )
 
     occupation = dict(
@@ -24,9 +26,15 @@ def make_test_db():
         title='plumber',
         duties=['plumb', 'route'],
         )
+
+    hobby = dict(
+        _id=ObjectId('4c9930234ee3132a1f000001'),
+        title='sports',
+        )
     
     db.people.save(person)
     db.occupations.save(occupation)
+    db.hobbies.save(hobby)
 
 if __name__ == '__main__':
     make_test_db()
