@@ -29,6 +29,6 @@ setup(name='mongodoc',
       entry_points="""
       # -*- Entry points: -*-
       [console_scripts]
-      doc-db=mongodoc.scripts:document_db
+      mongodoc=mongodoc.scripts:document_db
       """,
       )

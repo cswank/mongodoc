@@ -1,9 +1,9 @@
 
 If you have a mongodb database that you wish to document, a good
-starting point might be to install mongodoc and use the doc-db
+starting point might be to install mongodoc and use the mongodoc
 command::
 
-    % doc-db test
+    % mongodoc test
 
 After answering a few questions, you will get an output file that
 will look something like this (NOTE:  the links between docs has
@@ -47,10 +47,10 @@ link between the _id of occupations and the occupation field
 of the people doc.  If the find links feature is not working
 for you, you can disable it with the --find-links option
 
-The doc-db command has a few options for connecting to the db::
+The mongodoc command has a few options for connecting to the db::
 
-    % doc-db -h                
-    usage: doc-db [-h] [--port PORT] [--host HOST] [--username USERNAME]
+    % mongodoc -h                
+    usage: mongodoc [-h] [--port PORT] [--host HOST] [--username USERNAME]
                   [--password PASSWORD] [--file FILE]
                   name
 
