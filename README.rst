@@ -7,8 +7,7 @@ command::
 
 After answering a few questions, you will get an output file that
 will look something like this (NOTE:  the links between docs has
-been added in v0.2b.  I don't have very much test data, but seems
-to work)::
+been added in v0.2b.::
 
 
            _____________________________________________
