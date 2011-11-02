@@ -1,6 +1,19 @@
 Changelog
 =========
 
+0.3.1
+-------------------
+- Forgot to update the changelog on 0.3
+- Minor edit in README.rst.
+
+0.3
+-------------------
+- Changed the console command
+  from doc-db to mongodoc
+- Fixed easy_install problem
+  because of a missing HISTORY
+  file - OOPS!
+
 0.2b
 -------------------
 - Fixed a bug in counting similar docs

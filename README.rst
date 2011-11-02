@@ -6,8 +6,7 @@ command::
     % mongodoc test
 
 After answering a few questions, you will get an output file that
-will look something like this (NOTE:  the links between docs has
-been added in v0.2b.::
+will look something like this::
 
 
            _____________________________________________
