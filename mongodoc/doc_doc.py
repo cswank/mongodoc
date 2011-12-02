@@ -99,7 +99,7 @@ class DocDoc(object):
 
     def get_subdocs(self, doc):
         for key, value in doc.iteritems():
-            if isinstance(value, dict):
+            if isinstance(value, dict) and value != {}:
                 self._subdocs.append(DocDoc(value, key))
             elif isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
                 self._subdocs.append(DocDoc(value[0], key, inlist=True))
