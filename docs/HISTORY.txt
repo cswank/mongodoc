@@ -1,6 +1,11 @@
 Changelog
 =========
 
+
+0.3.2
+-------------------
+- Bugfix: bombed when the value of a field was {}
+
 0.3.1
 -------------------
 - Forgot to update the changelog on 0.3
