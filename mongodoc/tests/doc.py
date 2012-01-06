@@ -67,6 +67,10 @@ doc = {
     u'emailed_to_lims': False,
     u'hydrolysis_time': u'72',
     u'hydrolysis_temperature': u'40',
+    u'stuff': {
+        'x':1,
+        'y':2,
+        },
     u'results': {
         'junk':{
             'first':'craig',
