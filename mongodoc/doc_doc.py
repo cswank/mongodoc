@@ -58,12 +58,13 @@ class DocDoc(object):
             else:
                 row = self._get_row_without_subdoc(row)
             yield row
-        subdoc_row = True
         if self._subdoc_rows is not None:
             for row in self._subdoc_rows:
                 yield self._get_row_with_subdoc(['',''], row)
         self._subdoc_rows = None
-        while subdoc_row is not None:
+        #while len(self._subdocs) > 0:
+        subdoc_row = 1
+        while subdoc_row is not None or len(self._subdocs) > 0:
             subdoc_row = self._get_subdoc_row()
             if subdoc_row is not None:
                 yield self._get_row_with_subdoc(['',''], subdoc_row)

@@ -1,9 +1,14 @@
 Changelog
 =========
 
+0.3.4
+-------------------
+- Bugfix: didn't really fix the bug, but now I did for real.
+
 0.3.3
 -------------------
 - Bugfix: didn't show sub documents when the subdocs were longer than the parent doc.
+
 0.3.2
 -------------------
 - Bugfix: bombed when the value of a field was {}
